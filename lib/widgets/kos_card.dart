@@ -95,13 +95,13 @@ class KosCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.green[100],
+                          color: _getGenderColor(kos.gender),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          kos.gender,
+                          kos.gender, // Akan menampilkan 'Campur', 'Putra', atau 'Putri'
                           style: TextStyle(
-                            color: Colors.green[800],
+                            color: _getGenderTextColor(kos.gender),
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -206,5 +206,29 @@ class KosCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _getGenderColor(String gender) {
+    switch (gender) {
+      case 'Putra':
+        return Colors.blue[100]!;
+      case 'Putri':
+        return Colors.pink[100]!;
+      case 'Campur':
+      default:
+        return Colors.purple[100]!;
+    }
+  }
+
+  Color _getGenderTextColor(String gender) {
+    switch (gender) {
+      case 'Putra':
+        return Colors.blue[800]!;
+      case 'Putri':
+        return Colors.pink[800]!;
+      case 'Campur':
+      default:
+        return Colors.purple[800]!;
+    }
   }
 }

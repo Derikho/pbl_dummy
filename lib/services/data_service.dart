@@ -2,6 +2,12 @@ import '../models/kos_model.dart';
 import '../models/user_model.dart';
 
 class DataService {
+  static final DataService _instance = DataService._internal();
+  factory DataService() => _instance;
+  DataService._internal() {
+    _loadDummyData();
+  }
+
   List<KosModel> _allKos = [];
   List<KosModel> _favoriteKos = [];
   UserModel _currentUser = UserModel.guest();
@@ -9,11 +15,6 @@ class DataService {
   List<KosModel> get allKos => _allKos;
   List<KosModel> get favoriteKos => _favoriteKos;
   UserModel get currentUser => _currentUser;
-
-  // Constructor
-  DataService() {
-    _loadDummyData();
-  }
 
   void _loadDummyData() {
     _allKos = [
@@ -26,7 +27,7 @@ class DataService {
         rating: 4.8,
         sisaKamar: 5,
         tag: 'Featured',
-        gender: 'Kampur',
+        gender: 'Campur', // Diubah dari 'Kampur' ke 'Campur'
         latitude: -6.8912,
         longitude: 107.6106,
       ),
@@ -52,7 +53,7 @@ class DataService {
         rating: 4.7,
         sisaKamar: 1,
         tag: 'Featured',
-        gender: 'Kampur',
+        gender: 'Campur', // Diubah dari 'Kampur' ke 'Campur'
         latitude: -6.1989,
         longitude: 106.8323,
       ),
@@ -65,7 +66,7 @@ class DataService {
         rating: 4.7,
         sisaKamar: 5,
         tag: 'Featured',
-        gender: 'Campur',
+        gender: 'Campur', // Diubah dari 'Campur' tetap
         latitude: -6.8912,
         longitude: 107.6106,
       ),

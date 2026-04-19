@@ -56,11 +56,44 @@ class _DetailKosPageState extends State<DetailKosPage> {
     _isFavorite = _dataService.isFavorite(widget.kos.id);
   }
 
-  String _formatHarga(double harga) {
-    if (harga >= 1000000) {
-      return 'Rp${(harga / 1000000).toStringAsFixed(1)}jt';
+  String _formatHarga(dynamic harga) {
+    double hargaDouble;
+    if (harga is int) {
+      hargaDouble = harga.toDouble();
+    } else if (harga is double) {
+      hargaDouble = harga;
+    } else {
+      hargaDouble = 0.0;
     }
-    return 'Rp${harga.toStringAsFixed(0)}';
+    
+    if (hargaDouble >= 1000000) {
+      return 'Rp${(hargaDouble / 1000000).toStringAsFixed(1)}jt';
+    }
+    return 'Rp${hargaDouble.toStringAsFixed(0)}';
+  }
+
+  Color _getGenderColor(String gender) {
+    switch (gender) {
+      case 'Putra':
+        return Colors.blue[100]!;
+      case 'Putri':
+        return Colors.pink[100]!;
+      case 'Campur':
+      default:
+        return Colors.purple[100]!;
+    }
+  }
+
+  Color _getGenderTextColor(String gender) {
+    switch (gender) {
+      case 'Putra':
+        return Colors.blue[800]!;
+      case 'Putri':
+        return Colors.pink[800]!;
+      case 'Campur':
+      default:
+        return Colors.purple[800]!;
+    }
   }
 
   @override
@@ -183,9 +216,11 @@ class _DetailKosPageState extends State<DetailKosPage> {
                         children: [
                           const Icon(Icons.location_on, size: 16, color: Colors.grey),
                           const SizedBox(width: 4),
-                          Text(
-                            widget.kos.lokasi,
-                            style: const TextStyle(color: Colors.grey),
+                          Expanded(
+                            child: Text(
+                              widget.kos.lokasi,
+                              style: const TextStyle(color: Colors.grey),
+                            ),
                           ),
                         ],
                       ),
@@ -195,13 +230,13 @@ class _DetailKosPageState extends State<DetailKosPage> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: Colors.green[100],
+                              color: _getGenderColor(widget.kos.gender),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
                               widget.kos.gender,
                               style: TextStyle(
-                                color: Colors.green[700],
+                                color: _getGenderTextColor(widget.kos.gender),
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -708,7 +743,7 @@ class _DetailKosPageState extends State<DetailKosPage> {
             ),
             const SizedBox(height: 4),
             Text(
-              room['facilities'].join(' • '),
+              (room['facilities'] as List<String>).join(' • '),
               style: TextStyle(color: Colors.grey[600], fontSize: 12),
             ),
             const SizedBox(height: 4),
